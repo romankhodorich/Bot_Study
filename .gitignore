@@ -1,0 +1,4 @@
+bot_old.py
+venv/*
+std/*
+__pycache__
