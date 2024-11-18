@@ -3,4 +3,4 @@ venv/*
 std/*
 __pycache__
 settings.py
-escadrobot.*
+escadrobot.sqbpro

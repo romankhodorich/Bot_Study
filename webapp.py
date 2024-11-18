@@ -1,6 +1,7 @@
 from quart import Quart, request
 import ast
-from settings import *
+# from settings import *
+from bot import active_ids as aids
 import bot
 app = Quart(__name__)
 
@@ -31,9 +32,10 @@ async def handle_request():
         print(f'''message:
               {message}''')
         # Отправка сообщений
-        actives = await bot.aids()
-        print(f'Active IDS from bot.py: {actives}')
-        await bot.send_msg(message, actives)
+
+        print(f'Active IDS from bot.py: {aids}')
+        for aid in aids:
+            await bot.send_msg(message, aid)
 
         print(
             '------------------------------Message sent-----------------------------------')

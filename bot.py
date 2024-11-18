@@ -12,7 +12,23 @@ bot = Bot(Token, default=DefaultBotProperties(
 active_ids = []
 
 
+async def send_msg(message, id):
+    print('---------------------function send_msg started...------------------')
+    print(f'active_ids: {active_ids}')
+    kb = [[types.InlineKeyboardButton(text="Меню", callback_data='menu')],]
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=kb)
+
+    try:
+        print(f'sending message to id {id}...')
+        await bot.send_message(chat_id=id, text=message, reply_markup=keyboard)
+        print(f'message to id {id} sent.')
+    except Exception as e:
+        print(e)
+    print('---------------------function send_msg finished...-----------------')
+
 # Этот хэндлер будет срабатывать на команду "/start"
+
+
 @ dp.message(Command('start'))
 async def start_command(message: types.Message) -> None:
     kb = [
@@ -90,21 +106,6 @@ async def start_workday_callback(callback: types.CallbackQuery):
     ]
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=kb)
     await callback.message.edit_text(f'Спасибо за работу До новых встреч в эфире!', reply_markup=keyboard)
-
-
-async def send_msg(message):
-    print('---------------------function send_msg started...------------------')
-    print(f'active_ids: {active_ids}')
-    for active_id in active_ids():
-        kb = [[types.InlineKeyboardButton(text="Меню", callback_data='menu')],]
-        keyboard = types.InlineKeyboardMarkup(inline_keyboard=kb)
-
-        try:
-            print(f'sending message to id {active_id}...')
-            await bot.send_message(chat_id=active_id, text=message, reply_markup=keyboard)
-            print(f'message to id {active_id} sent.')
-        except Exception as e:
-            print(e)
 
 
 async def escadrobot_main() -> None:
